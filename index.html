@@ -1,0 +1,631 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Muksin — Luxury Clothing</title>
+  <meta name="description" content="Muksin Clothing — luxury streetwear & premium collections." />
+  <style>
+    /* ---------- Basic Reset ---------- */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: "Helvetica Neue", Inter, Arial, sans-serif;
+      color:#111;
+      background: linear-gradient(180deg, #faf9f7 0%, #f7f6f4 100%);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+    a{color:inherit;text-decoration:none}
+
+    /* ---------- Colors ---------- */
+    :root{
+      --white:#fff;
+      --muted:#7b7b7b;
+      --accent:#b8860b; /* gold */
+      --accent-dark:#8c6b09;
+      --card:#fff;
+      --glass: rgba(255,255,255,0.6);
+      --shadow: 0 10px 30px rgba(16,24,40,0.08);
+      --section-pad:60px;
+      --max-width:1200px;
+    }
+
+    /* ---------- Container ---------- */
+    .wrap{max-width:var(--max-width);margin:0 auto;padding:0 20px}
+
+    /* ---------- Header ---------- */
+    header{
+      position:sticky;top:0;background:rgba(255,255,255,0.9);
+      backdrop-filter: blur(8px);z-index:40;border-bottom:1px solid rgba(0,0,0,0.03)
+    }
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+    .brand{display:flex;align-items:center;gap:14px}
+    .logo{
+      width:56px;height:56px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#f7b733);
+      display:grid;place-items:center;color:white;font-weight:800;font-size:20px;letter-spacing:0.5px;box-shadow:0 6px 18px rgba(0,0,0,0.08)
+    }
+    .brand h1{font-size:18px;margin:0;line-height:1}
+    nav ul{display:flex;gap:18px;align-items:center;list-style:none}
+    nav a{font-weight:600;color:var(--muted);font-size:14px;padding:8px 10px;border-radius:8px}
+    nav a:hover{color:var(--accent-dark);background:rgba(184,134,11,0.06)}
+
+    .actions{display:flex;gap:12px;align-items:center}
+    .btn{
+      background:var(--accent);color:white;padding:10px 14px;border-radius:10px;border:none;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(140,107,9,0.12)
+    }
+    .btn.ghost{background:transparent;color:var(--accent);border:1px solid rgba(184,134,11,0.12);box-shadow:none}
+
+    .cart-btn{position:relative}
+    .cart-count{position:absolute;top:-8px;right:-8px;background:var(--accent-dark);color:white;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:800}
+
+    /* ---------- Hero ---------- */
+    .hero{
+      display:flex;gap:30px;align-items:center;padding:var(--section-pad) 0;
+    }
+    .hero-left{flex:1}
+    .eyebrow{display:inline-block;padding:6px 12px;border-radius:999px;background:linear-gradient(90deg,rgba(184,134,11,0.12),rgba(184,134,11,0.06));color:var(--accent-dark);font-weight:700;margin-bottom:18px}
+    .hero h2{font-size:44px;line-height:1.02;margin-bottom:14px;color:#0b0b0b}
+    .hero p{color:var(--muted);max-width:640px;margin-bottom:20px}
+    .hero-cta{display:flex;gap:12px;align-items:center}
+    .hero-image{width:420px;height:340px;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);flex-shrink:0}
+    .hero-image img{width:100%;height:100%;object-fit:cover;display:block}
+
+    /* ---------- Featured ---------- */
+    .section{padding:48px 0}
+    .section.dark{background:#fff}
+    .section .section-title{display:flex;align-items:baseline;gap:12px;margin-bottom:18px}
+    .section .section-title h3{font-size:22px;margin:0}
+    .grid{display:grid;gap:18px}
+    .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+    .grid.cols-4{grid-template-columns:repeat(4,1fr)}
+    .product-card{background:var(--card);border-radius:12px;overflow:hidden;box-shadow:0 10px 30px rgba(10,10,10,0.04);display:flex;flex-direction:column}
+    .product-thumb{height:320px;overflow:hidden}
+    .product-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .9s ease}
+    .product-card:hover .product-thumb img{transform:scale(1.03)}
+    .product-meta{padding:14px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+    .product-meta .title{font-weight:800}
+    .meta-row{display:flex;justify-content:space-between;align-items:center}
+
+    /* ---------- Categories ---------- */
+    .categories{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .cat{position:relative;border-radius:12px;overflow:hidden;height:220px;display:flex;align-items:flex-end;padding:16px;color:white}
+    .cat::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,0.45));mix-blend-mode:multiply}
+    .cat h4{position:relative;z-index:2;margin:0}
+
+    /* ---------- Lookbook / Gallery ---------- */
+    .masonry{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .masonry img{width:100%;height:100%;object-fit:cover;border-radius:10px;display:block}
+
+    /* ---------- Reviews ---------- */
+    .reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .review-card{background:linear-gradient(180deg,#fff,#fbfbfa);padding:18px;border-radius:12px;box-shadow:var(--shadow)}
+
+    /* ---------- Newsletter ---------- */
+    .newsletter{background:linear-gradient(90deg, rgba(184,134,11,0.06), rgba(184,134,11,0.03));border-radius:12px;padding:28px;display:flex;gap:18px;align-items:center;justify-content:space-between}
+    .newsletter form{display:flex;gap:10px;align-items:center;flex:1}
+
+    input[type="email"]{
+      padding:12px 14px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);flex:1;background:transparent
+    }
+
+    /* ---------- Footer ---------- */
+    footer{padding:34px 0;color:var(--muted);font-size:14px;border-top:1px solid rgba(0,0,0,0.03);margin-top:34px}
+    .foot-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    .small{font-size:13px;color:var(--muted)}
+
+    /* ---------- Cart Drawer ---------- */
+    .drawer{position:fixed;right:24px;top:90px;width:360px;background:var(--card);border-radius:12px;padding:16px;box-shadow:0 30px 80px rgba(2,6,23,0.2);transform:translateX(110%);transition:transform .25s ease;z-index:80;max-height:70vh;overflow:auto}
+    .drawer.open{transform:translateX(0)}
+    .cart-item{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px dashed rgba(0,0,0,0.05)}
+
+    /* ---------- Modal ---------- */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:100}
+    .modal-backdrop.open{display:flex}
+    .modal{background:var(--card);width:880px;max-width:96%;border-radius:12px;padding:18px;display:flex;gap:16px;align-items:flex-start}
+    .modal .m-left{width:48%}
+    .modal .m-right{width:52%}
+    .close-modal{background:transparent;border:none;font-size:20px;cursor:pointer;color:var(--muted)}
+
+    /* ---------- Responsive ---------- */
+    @media(max-width:1100px){ .grid.cols-4{grid-template-columns:repeat(3,1fr)} .masonry{grid-template-columns:repeat(2,1fr)} .categories{grid-template-columns:repeat(2,1fr)} }
+    @media(max-width:800px){
+      .hero{flex-direction:column-reverse}
+      .hero-image{width:100%;height:220px}
+      .grid.cols-3{grid-template-columns:repeat(2,1fr)}
+      .reviews{grid-template-columns:1fr}
+      .foot-grid{grid-template-columns:repeat(2,1fr)}
+      .categories{grid-template-columns:1fr}
+      .masonry{grid-template-columns:1fr}
+      .modal{flex-direction:column}
+      .modal .m-left,.modal .m-right{width:100%}
+    }
+    @media(max-width:420px){
+      .grid.cols-3{grid-template-columns:1fr}
+      nav ul{display:none}
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="wrap nav-inner">
+      <div class="brand">
+        <div class="logo">MK</div>
+        <div>
+          <h1>Muksin</h1>
+          <div class="small" style="margin-top:3px">Luxury & refined streetwear</div>
+        </div>
+      </div>
+
+      <nav>
+        <ul>
+          <li><a href="#shop">Shop</a></li>
+          <li><a href="#categories">Collections</a></li>
+          <li><a href="#lookbook">Lookbook</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="actions">
+        <button class="btn ghost" id="btnAccount">Sign In</button>
+        <div class="cart-btn">
+          <button class="btn" id="openCart">Cart</button>
+          <span class="cart-count" id="cartCount" style="display:none">0</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero wrap">
+    <div class="hero-left">
+      <span class="eyebrow">NEW COLLECTION</span>
+      <h2>Refined tailoring meets modern streetwear — <br/> Introducing the Autumn Luxe drop</h2>
+      <p>Hand-finished pieces crafted with premium fabrics. Free express shipping and signature packaging on all orders this month.</p>
+      <div class="hero-cta">
+        <button class="btn" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">Shop Collection</button>
+        <a class="btn ghost" href="#lookbook">View Lookbook</a>
+      </div>
+      <div style="margin-top:18px;color:var(--muted)">Contact: <strong>muksinlopez@gmail.com</strong> • <strong>0551355761</strong></div>
+    </div>
+    <div class="hero-image">
+      <img src="https://source.unsplash.com/900x700/?fashion,luxury,model" alt="Muksin hero image">
+    </div>
+  </section>
+
+  <!-- FEATURED PRODUCTS -->
+  <section id="shop" class="section wrap">
+    <div class="section-title">
+      <h3>Featured Pieces</h3>
+      <div style="margin-left:auto;color:var(--muted)">Curated selection — limited stock</div>
+    </div>
+
+    <div style="display:flex;gap:12px;margin-bottom:18px;align-items:center">
+      <div style="display:flex;gap:8px">
+        <button class="btn ghost" onclick="filterCategory('all')">All</button>
+        <button class="btn ghost" onclick="filterCategory('men')">Men</button>
+        <button class="btn ghost" onclick="filterCategory('women')">Women</button>
+        <button class="btn ghost" onclick="filterCategory('unisex')">Unisex</button>
+      </div>
+      <div style="margin-left:auto;color:var(--muted)">Sort:
+        <select id="sortSelect" style="margin-left:8px;padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)">
+          <option value="featured">Featured</option>
+          <option value="price-asc">Price ↑</option>
+          <option value="price-desc">Price ↓</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="productGrid" class="grid cols-3">
+      <!-- products rendered via JS -->
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section id="categories" class="section wrap">
+    <div class="section-title"><h3>Collections</h3><div style="margin-left:auto;color:var(--muted)">Explore curated capsules</div></div>
+
+    <div class="categories" style="margin-top:18px">
+      <a class="cat" style="background-image:url('https://source.unsplash.com/900x600/?suit,luxury');background-size:cover;background-position:center" href="#shop" onclick="filterCategory('men')">
+        <h4>Men — Tailored Luxe</h4>
+      </a>
+
+      <a class="cat" style="background-image:url('https://source.unsplash.com/900x600/?dress,fashion');background-size:cover;background-position:center" href="#shop" onclick="filterCategory('women')">
+        <h4>Women — Evening & Daywear</h4>
+      </a>
+
+      <a class="cat" style="background-image:url('https://source.unsplash.com/900x600/?streetwear,model');background-size:cover;background-position:center" href="#shop" onclick="filterCategory('unisex')">
+        <h4>Unisex — Elevated Essentials</h4>
+      </a>
+    </div>
+  </section>
+
+  <!-- LOOKBOOK / MASONRY -->
+  <section id="lookbook" class="section wrap">
+    <div class="section-title"><h3>Lookbook</h3><div style="margin-left:auto;color:var(--muted)">Editorial & street captures</div></div>
+    <div class="masonry" style="margin-top:18px">
+      <img src="https://source.unsplash.com/800x1000/?fashion,editorial" alt="">
+      <img src="https://source.unsplash.com/800x1000/?model,street" alt="">
+      <img src="https://source.unsplash.com/800x1000/?studio,fashion" alt="">
+      <img src="https://source.unsplash.com/800x1000/?runway,highfashion" alt="">
+      <img src="https://source.unsplash.com/800x1000/?luxury,clothing" alt="">
+      <img src="https://source.unsplash.com/800x1000/?portrait,fashion" alt="">
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews" class="section wrap">
+    <div class="section-title"><h3>Customer Reviews</h3><div style="margin-left:auto;color:var(--muted)">What clients say</div></div>
+    <div class="reviews" style="margin-top:18px">
+      <div class="review-card">
+        <div style="display:flex;gap:12px;align-items:center;margin-bottom:8px">
+          <div style="width:54px;height:54px;border-radius:999px;background:#eee"></div>
+          <div>
+            <strong>Selina K.</strong><div class="small" style="color:var(--muted)">Accra</div>
+          </div>
+        </div>
+        <div style="color:var(--muted)">"Exceptional tailoring and packaging. The hoodie fabric feels premium and the fit is perfect. Will buy again."</div>
+      </div>
+
+      <div class="review-card">
+        <div style="display:flex;gap:12px;align-items:center;margin-bottom:8px">
+          <div style="width:54px;height:54px;border-radius:999px;background:#eee"></div>
+          <div>
+            <strong>Daniel O.</strong><div class="small" style="color:var(--muted)">Kumasi</div>
+          </div>
+        </div>
+        <div style="color:var(--muted)">"Fast shipping and great customer support. The jacket is worth every cedi."</div>
+      </div>
+
+      <div class="review-card">
+        <div style="display:flex;gap:12px;align-items:center;margin-bottom:8px">
+          <div style="width:54px;height:54px;border-radius:999px;background:#eee"></div>
+          <div>
+            <strong>Aisha R.</strong><div class="small" style="color:var(--muted)">Tema</div>
+          </div>
+        </div>
+        <div style="color:var(--muted)">"The quality is unbeatable for the price. Loved the unboxing experience."</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIZING / INFO -->
+  <section class="section wrap">
+    <div class="section-title"><h3>Fit & Fabric</h3><div style="margin-left:auto;color:var(--muted)">Care & sizing</div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px">
+      <div style="background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--shadow)">
+        <h4 style="margin-bottom:10px">Materials</h4>
+        <p style="color:var(--muted)">We use premium cotton blends, Italian-certified linings, and durable hardware to ensure longevity and drape.</p>
+        <ul style="color:var(--muted);margin-top:10px">
+          <li>GOTS-certified cotton options</li>
+          <li>Water-resistant finishes available</li>
+          <li>Dry-clean recommended for tailored items</li>
+        </ul>
+      </div>
+      <div style="background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--shadow)">
+        <h4 style="margin-bottom:10px">Sizing Guide</h4>
+        <p style="color:var(--muted)">Our pieces are designed with a modern relaxed fit. If between sizes, size up for a looser silhouette.</p>
+        <table style="width:100%;margin-top:10px;border-collapse:collapse;color:var(--muted)">
+          <tr><td><strong>Chest</strong></td><td>Small 90–96cm • M 96–102cm • L 102–108cm</td></tr>
+          <tr><td><strong>Waist</strong></td><td>Small 74–80cm • M 80–86cm • L 86–92cm</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="section wrap">
+    <div class="newsletter">
+      <div style="flex:1">
+        <h3 style="margin-bottom:8px">Stay in the loop — Muksin Newsletter</h3>
+        <div style="color:var(--muted)">Get exclusive drops, early access, and style tips sent once a month.</div>
+      </div>
+      <form id="newsletterForm" style="margin-left:20px">
+        <input id="newsletterEmail" type="email" placeholder="Your email address" required>
+        <button class="btn" type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- CONTACT & FAQ -->
+  <section id="contact" class="section wrap">
+    <div class="section-title"><h3>Contact & FAQ</h3><div style="margin-left:auto;color:var(--muted)">We're here to help</div></div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px">
+      <div style="background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--shadow)">
+        <h4>Contact</h4>
+        <p style="color:var(--muted)">Email: <strong>muksinlopez@gmail.com</strong><br>Phone: <strong>0551355761</strong></p>
+        <p style="color:var(--muted)">Open: Mon–Sat, 9am–6pm GMT</p>
+      </div>
+      <div style="background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--shadow)">
+        <h4>FAQ</h4>
+        <p style="color:var(--muted)"><strong>Shipping:</strong> Express delivery within 3–5 business days.</p>
+        <p style="color:var(--muted)"><strong>Returns:</strong> 14-day return policy on unworn items.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h4>Muksin</h4>
+        <div class="small" style="margin-top:8px">Luxury clothing — curated capsules & made-to-wear.</div>
+      </div>
+
+      <div>
+        <h4>Shop</h4>
+        <div class="small"><a href="#shop">All products</a><br><a href="#categories">Collections</a><br><a href="#lookbook">Lookbook</a></div>
+      </div>
+
+      <div>
+        <h4>Support</h4>
+        <div class="small"><a href="#contact">Contact</a><br><a href="#contact">Shipping & returns</a></div>
+      </div>
+
+      <div>
+        <h4>Contact</h4>
+        <div class="small">muksinlopez@gmail.com<br>0551355761</div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;color:var(--muted)">© <span id="year"></span> Muksin — All rights reserved.</div>
+  </footer>
+
+  <!-- CART DRAWER -->
+  <div id="cartDrawer" class="drawer" aria-hidden="true">
+    <h3>Your Cart</h3>
+    <div id="cartItems"></div>
+    <div style="padding-top:12px;display:flex;justify-content:space-between;align-items:center">
+      <div style="font-weight:800">Total: <span id="cartTotal">₵0.00</span></div>
+      <div>
+        <button id="clearCart" class="btn ghost">Clear</button>
+        <button id="checkoutBtn" class="btn" style="margin-left:8px">Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCT MODAL -->
+  <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div style="width:100%;display:flex;justify-content:space-between;align-items:flex-start">
+        <div class="m-left">
+          <img id="modalImg" src="" alt="" style="width:100%;height:420px;object-fit:cover;border-radius:8px">
+        </div>
+        <div class="m-right">
+          <button class="close-modal" id="closeModal">&times;</button>
+          <h3 id="modalTitle">Product Name</h3>
+          <div id="modalPrice" style="font-weight:900;font-size:20px;margin-top:6px">₵0.00</div>
+          <p id="modalDesc" style="color:var(--muted);margin-top:12px">Product description</p>
+
+          <div style="margin-top:12px">
+            <label style="display:block;margin-bottom:6px;color:var(--muted)">Size</label>
+            <select id="modalSize" style="padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)">
+              <option>Small</option><option>Medium</option><option>Large</option>
+            </select>
+          </div>
+
+          <div style="margin-top:18px;display:flex;gap:10px;align-items:center">
+            <button class="btn" id="modalAdd">Add to Cart</button>
+            <button class="btn ghost" id="buyNow">Buy Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* -------------------------
+   Data: products (edit as needed)
+   ------------------------- */
+const products = [
+  { id:'m1', title:'Bonded Wool Coat', price:520.00, cat:'men', img:'https://source.unsplash.com/800x1000/?coat,men,luxury', desc:'Tailored bonded wool coat with structured shoulders.' },
+  { id:'m2', title:'Silk-Blend Shirt', price:220.00, cat:'men', img:'https://source.unsplash.com/800x1000/?silk,shirt,men', desc:'Soft silk-blend button-up, made in small batches.' },
+  { id:'w1', title:'Satin Slip Dress', price:450.00, cat:'women', img:'https://source.unsplash.com/800x1000/?satin,dress,woman', desc:'Bias-cut satin slip dress with soft drape.' },
+  { id:'w2', title:'Tailored Blazer', price:380.00, cat:'women', img:'https://source.unsplash.com/800x1000/?blazer,woman,fashion', desc:'Single-breasted, sculpted silhouette.' },
+  { id:'u1', title:'Cashmere Hoodie', price:320.00, cat:'unisex', img:'https://source.unsplash.com/800x1000/?cashmere,hoodie', desc:'Superfine cashmere hoodie — luxurious everyday.' },
+  { id:'u2', title:'Signature Tee', price:120.00, cat:'unisex', img:'https://source.unsplash.com/800x1000/?tshirt,designer', desc:'Premium combed cotton with embroidered logo.' },
+  { id:'u3', title:'Leather Crossbody', price:260.00, cat:'unisex', img:'https://source.unsplash.com/800x1000/?leather,bag', desc:'Hand-stitched leather crossbody with brass hardware.' },
+  { id:'m3', title:'Tailored Trousers', price:210.00, cat:'men', img:'https://source.unsplash.com/800x1000/?trousers,tailored', desc:'High-rise tailored trousers in wool blend.' }
+];
+
+/* -------------------------
+   Cart (localStorage)
+   ------------------------- */
+const STORAGE_KEY = 'muksin_cart_v1';
+let cart = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+
+function saveCart(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+  renderCartUI();
+}
+
+/* ---------- Render products ---------- */
+const productGrid = document.getElementById('productGrid');
+
+function currency(n){ return '₵' + n.toFixed(2); }
+
+function renderProducts(list=products){
+  productGrid.innerHTML = '';
+  list.forEach(p=>{
+    const el = document.createElement('article');
+    el.className = 'product-card';
+    el.innerHTML = `
+      <div class="product-thumb"><img src="${p.img}" alt="${p.title}"></div>
+      <div class="product-meta">
+        <div>
+          <div class="title">${p.title}</div>
+          <div style="color:var(--muted);font-size:13px;margin-top:6px">${p.desc}</div>
+        </div>
+        <div class="meta-row">
+          <div style="font-weight:900">${currency(p.price)}</div>
+          <div style="display:flex;gap:8px">
+            <button class="btn ghost" onclick="openModal('${p.id}')">View</button>
+            <button class="btn" onclick="addToCart('${p.id}')">Add</button>
+          </div>
+        </div>
+      </div>
+    `;
+    productGrid.appendChild(el);
+  });
+}
+
+/* ---------- Filters & Sort ---------- */
+function filterCategory(cat){
+  if(cat === 'all'){ renderProducts(products); return; }
+  const filtered = products.filter(p=>p.cat===cat);
+  renderProducts(filtered);
+  window.location.hash = '#shop';
+}
+
+document.getElementById('sortSelect').addEventListener('change', (e)=>{
+  const v = e.target.value;
+  let sorted = [...products];
+  if(v === 'price-asc') sorted.sort((a,b)=>a.price-b.price);
+  if(v === 'price-desc') sorted.sort((a,b)=>b.price-a.price);
+  renderProducts(sorted);
+});
+
+/* ---------- Modal ---------- */
+const modalBackdrop = document.getElementById('modalBackdrop');
+const modalImg = document.getElementById('modalImg');
+const modalTitle = document.getElementById('modalTitle');
+const modalPrice = document.getElementById('modalPrice');
+const modalDesc = document.getElementById('modalDesc');
+const modalAdd = document.getElementById('modalAdd');
+const modalSize = document.getElementById('modalSize');
+
+let activeProduct = null;
+
+function openModal(id){
+  const p = products.find(x=>x.id===id);
+  if(!p) return;
+  activeProduct = p;
+  modalImg.src = p.img;
+  modalTitle.textContent = p.title;
+  modalPrice.textContent = currency(p.price);
+  modalDesc.textContent = p.desc;
+  modalBackdrop.classList.add('open');
+  modalBackdrop.setAttribute('aria-hidden','false');
+}
+
+document.getElementById('closeModal').addEventListener('click', ()=>{ modalBackdrop.classList.remove('open'); modalBackdrop.setAttribute('aria-hidden','true'); });
+
+modalAdd.addEventListener('click', ()=>{
+  if(!activeProduct) return;
+  addToCart(activeProduct.id);
+  modalBackdrop.classList.remove('open');
+});
+
+/* ---------- Cart functions ---------- */
+function addToCart(id){
+  const item = cart.find(i=>i.id===id);
+  if(item) item.qty++;
+  else {
+    const p = products.find(x=>x.id===id);
+    if(!p) return;
+    cart.push({ id:p.id, title:p.title, price:p.price, qty:1, img:p.img });
+  }
+  saveCart();
+  flashCartCount();
+}
+
+function changeQty(id, delta){
+  const it = cart.find(i=>i.id===id);
+  if(!it) return;
+  it.qty += delta;
+  if(it.qty <= 0) cart = cart.filter(x=>x.id!==id);
+  saveCart();
+}
+
+function clearCart(){
+  if(!confirm('Clear cart?')) return;
+  cart = [];
+  saveCart();
+}
+
+function getTotal(){ return cart.reduce((s,i)=>s + i.price * i.qty, 0); }
+
+function renderCartUI(){
+  const cartItems = document.getElementById('cartItems');
+  const cartCount = document.getElementById('cartCount');
+  const cartTotal = document.getElementById('cartTotal');
+
+  const qty = cart.reduce((s,i)=>s+i.qty,0);
+  if(qty > 0){ cartCount.style.display='inline-block'; cartCount.textContent = qty; } else { cartCount.style.display='none'; }
+
+  cartItems.innerHTML = '';
+  if(cart.length === 0){
+    cartItems.innerHTML = '<div style="color:var(--muted);padding:12px 0">Your cart is empty.</div>';
+  } else {
+    cart.forEach(i=>{
+      const row = document.createElement('div');
+      row.className = 'cart-item';
+      row.innerHTML = `
+        <img src="${i.img}" alt="${i.title}" style="width:64px;height:64px;object-fit:cover;border-radius:8px">
+        <div style="flex:1">
+          <div style="font-weight:700">${i.title}</div>
+          <div style="color:var(--muted);font-size:13px">${currency(i.price)} × ${i.qty}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <button onclick="changeQty('${i.id}',1)" style="padding:6px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);background:#fff;cursor:pointer">+</button>
+          <button onclick="changeQty('${i.id}',-1)" style="padding:6px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);background:#fff;cursor:pointer">−</button>
+        </div>
+      `;
+      cartItems.appendChild(row);
+    });
+  }
+  cartTotal.textContent = currency(getTotal());
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+}
+
+/* ---------- Drawer toggle ---------- */
+const drawer = document.getElementById('cartDrawer');
+document.getElementById('openCart').addEventListener('click', ()=>{ drawer.classList.toggle('open'); });
+
+document.getElementById('clearCart').addEventListener('click', clearCart);
+document.getElementById('checkoutBtn').addEventListener('click', ()=>{
+  if(cart.length === 0) return alert('Your cart is empty.');
+  const summary = cart.map(i=>`${i.title} × ${i.qty} — ${currency(i.price * i.qty)}`).join('\\n');
+  const total = currency(getTotal());
+  if(confirm('Proceed to checkout?\\n\\n' + summary + '\\n\\nTotal: ' + total)){
+    alert('Thank you! This is a demo checkout. Order summary copied to clipboard.');
+    try{ navigator.clipboard.writeText('Order summary:\\n' + summary + '\\nTotal: ' + total); }catch(e){}
+    cart = []; saveCart(); drawer.classList.remove('open');
+  }
+});
+
+/* ---------- Newsletter mock ---------- */
+document.getElementById('newsletterForm').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  const email = document.getElementById('newsletterEmail').value.trim();
+  if(!email) return alert('Enter a valid email.');
+  alert('Subscribed! Thank you — ' + email);
+  document.getElementById('newsletterEmail').value = '';
+});
+
+/* ---------- Small helpers ---------- */
+function flashCartCount(){
+  const el = document.getElementById('cartCount');
+  el.style.transform = 'scale(1.2)';
+  setTimeout(()=> el.style.transform = 'scale(1)',200);
+}
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ---------- Initial render ---------- */
+renderProducts();
+renderCartUI();
+
+/* Optional: keep in sync across tabs */
+window.addEventListener('storage', ()=>{ cart = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); renderCartUI(); });
+
+</script>
+
+</body>
+</html>
